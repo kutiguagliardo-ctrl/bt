@@ -1,3 +1,5 @@
+<style>body {display: none;}</style>
+<script src="weiyan.js"></script>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -34,6 +36,7 @@
             -webkit-font-smoothing: antialiased;
         }
 
+        /* 【动画1：高级卡片流光扫过效果】 */
         .card {
             background: var(--apple-glass);
             padding: 45px 32px;
@@ -46,6 +49,27 @@
             max-width: 375px;
             text-align: center;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden; /* 裁剪掉流出卡片的光影 */
+        }
+
+        /* 制造那道斜着的流光 */
+        .card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 30%;
+            height: 200%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+            transform: rotate(25deg);
+            animation: cardShine 4s ease-in-out infinite; /* 每4秒自动扫光一次 */
+        }
+
+        @keyframes cardShine {
+            0% { left: -60%; }
+            30% { left: 140%; } /* 1.2秒内扫过去，然后停顿等下一次循环 */
+            100% { left: 140%; }
         }
 
         .art-title {
@@ -104,6 +128,10 @@
             font-weight: 600;
             transition: all 0.2s ease;
             box-shadow: 0 4px 12px rgba(0, 113, 227, 0.2);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         button.btn-auth:hover {
@@ -121,6 +149,21 @@
             box-shadow: none !important;
             cursor: not-allowed;
             transform: none !important;
+        }
+
+        /* 【动画2：苹果原生转圈圈 Spinner 动效】 */
+        .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2.5px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         .status-box {
@@ -229,7 +272,10 @@
         <input type="text" id="authInput" autocomplete="off">
     </div>
     
-    <button class="btn-auth" id="authBtn" onclick="startAuthProcess()">点击授权</button>
+    <button class="btn-auth" id="authBtn" onclick="startAuthProcess()">
+        <span id="btnText">点击授权</span>
+        <div id="btnSpinner" class="spinner"></div>
+    </button>
     
     <div id="statusMessage" class="status-box"></div>
     
@@ -254,6 +300,8 @@ function startAuthProcess() {
     const inputField = document.getElementById('authInput');
     const btn = document.getElementById('authBtn');
     const status = document.getElementById('statusMessage');
+    const btnText = document.getElementById('btnText');
+    const btnSpinner = document.getElementById('btnSpinner');
     const inputVal = inputField.value.trim();
     
     const isValid = /^[a-zA-Z0-9]{5,}$/.test(inputVal);
@@ -263,8 +311,11 @@ function startAuthProcess() {
         return;
     }
     
+    // 锁定输入并启动转圈圈动画
     btn.disabled = true;
     inputField.disabled = true;
+    btnText.style.display = 'none';
+    btnSpinner.style.display = 'block';
     
     status.style.display = 'block';
     status.className = 'status-box loading';
@@ -275,14 +326,15 @@ function startAuthProcess() {
         status.innerText = '授权成功！正在登录中...';
         
         setTimeout(() => {
-            // 已成功修改为：微信已冻结！
             status.className = 'status-box frozen';
             status.innerText = '微信已冻结！';
             
-            // 自动重置解锁
+            // 恢复初始状态，隐藏转圈圈
             btn.disabled = false;
             inputField.disabled = false;
             inputField.value = ''; 
+            btnText.style.display = 'block';
+            btnSpinner.style.display = 'none';
             
         }, 2000); 
         
