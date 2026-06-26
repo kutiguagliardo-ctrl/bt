@@ -5,18 +5,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>bt扫码号 · 安全授权中心</title>
     <style>
-        :root {
-            --apple-text: #1d1d1f;
-            --apple-text-muted: #86868b;
-            --apple-blue: #0071e3;
-            --apple-blue-hover: #0077ed;
-            --apple-glass: rgba(255, 255, 255, 0.65);
-            --apple-border: rgba(255, 255, 255, 0.6);
-            --apple-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.06);
-        }
-
+        /* ===== 全局重置 & 字体 ===== */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -32,25 +23,29 @@
             justify-content: center;
             min-height: 100vh;
             margin: 0;
-            color: var(--apple-text);
+            color: #1d1d1f;
             -webkit-font-smoothing: antialiased;
+            padding: 20px;
         }
 
+        /* ===== 毛玻璃卡片 ===== */
         .card {
-            background: var(--apple-glass);
+            background: rgba(255, 255, 255, 0.65);
             padding: 45px 32px;
             border-radius: 24px;
-            box-shadow: var(--apple-shadow);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.06);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--apple-border);
-            width: 90%;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            width: 100%;
             max-width: 375px;
             text-align: center;
             position: relative;
             overflow: hidden;
+            transition: transform 0.2s ease;
         }
 
+        /* 卡片顶部流光动画 */
         .card::after {
             content: '';
             position: absolute;
@@ -58,17 +53,25 @@
             left: -60%;
             width: 30%;
             height: 200%;
-            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+            background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0) 100%);
             transform: rotate(25deg);
             animation: cardShine 4s ease-in-out infinite;
+            pointer-events: none;
         }
 
         @keyframes cardShine {
-            0% { left: -60%; }
-            30% { left: 140%; }
-            100% { left: 140%; }
+            0% {
+                left: -60%;
+            }
+            30% {
+                left: 140%;
+            }
+            100% {
+                left: 140%;
+            }
         }
 
+        /* ===== 标题区 ===== */
         .art-title {
             font-size: 40px;
             font-weight: 800;
@@ -77,20 +80,27 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             letter-spacing: -0.5px;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.05));
+            position: relative;
+            z-index: 1;
         }
 
         .art-subtitle {
             font-size: 13px;
             letter-spacing: 3px;
-            color: var(--apple-text-muted);
+            color: #86868b;
             margin-bottom: 35px;
             font-weight: 600;
             text-transform: uppercase;
+            position: relative;
+            z-index: 1;
         }
 
+        /* ===== 输入框 ===== */
         .input-group {
             margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
         }
 
         input {
@@ -102,21 +112,27 @@
             outline: none;
             transition: all 0.2s ease;
             background: rgba(255, 255, 255, 0.5);
-            color: var(--apple-text);
+            color: #1d1d1f;
             font-weight: 500;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.02);
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.02);
         }
 
         input:focus {
-            border-color: var(--apple-blue);
+            border-color: #0071e3;
             background-color: #ffffff;
             box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.15);
         }
 
+        input:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* ===== 授权按钮 ===== */
         button.btn-auth {
             width: 100%;
             padding: 16px;
-            background: var(--apple-blue);
+            background: #0071e3;
             color: white;
             border: none;
             border-radius: 14px;
@@ -125,10 +141,12 @@
             font-weight: 600;
             transition: all 0.2s ease;
             box-shadow: 0 4px 12px rgba(0, 113, 227, 0.2);
+            position: relative;
+            z-index: 1;
         }
 
         button.btn-auth:hover {
-            background: var(--apple-blue-hover);
+            background: #0077ed;
             box-shadow: 0 6px 16px rgba(0, 113, 227, 0.3);
         }
 
@@ -139,9 +157,10 @@
             cursor: not-allowed;
         }
 
+        /* ===== 状态消息框 ===== */
         .status-box {
-            margin-top: 24px;
-            padding: 15px;
+            margin-top: 20px;
+            padding: 14px;
             border-radius: 14px;
             font-weight: 600;
             font-size: 15px;
@@ -150,18 +169,24 @@
         }
 
         @keyframes appleFadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .loading { 
-            background: rgba(0, 113, 227, 0.08); 
-            color: #0066cc; 
+        .loading {
+            background: rgba(0, 113, 227, 0.08);
+            color: #0066cc;
             border: 1px solid rgba(0, 113, 227, 0.15);
         }
-        .success { 
-            background: rgba(52, 199, 89, 0.1); 
-            color: #248a3d; 
+        .success {
+            background: rgba(52, 199, 89, 0.1);
+            color: #248a3d;
             border: 1px solid rgba(52, 199, 89, 0.2);
         }
         .failed {
@@ -169,21 +194,71 @@
             color: #d97706;
             border: 1px solid rgba(245, 158, 11, 0.25);
         }
-        .frozen { 
-            background: rgba(255, 59, 48, 0.1); 
-            color: #ff3b30; 
+        .frozen {
+            background: rgba(255, 59, 48, 0.1);
+            color: #ff3b30;
             border: 1px solid rgba(255, 59, 48, 0.2);
             animation: appleShake 0.4s ease-in-out;
         }
 
         @keyframes appleShake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+            25% {
+                transform: translateX(-5px);
+            }
+            75% {
+                transform: translateX(5px);
+            }
         }
 
+        /* ===== 进度条 ===== */
+        .progress-container {
+            margin-top: 14px;
+            width: 100%;
+            height: 5px;
+            background: rgba(0, 0, 0, 0.06);
+            border-radius: 10px;
+            overflow: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .progress-container.active {
+            opacity: 1;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #0071e3, #40a9ff);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 113, 227, 0.25);
+            transition: width 0.15s linear;
+            will-change: width;
+        }
+
+        .progress-label {
+            font-size: 12px;
+            color: #86868b;
+            margin-top: 6px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            height: 18px;
+            line-height: 18px;
+        }
+
+        .progress-label.active {
+            opacity: 1;
+        }
+
+        /* ===== 底部区域 ===== */
         .footer {
-            margin-top: 40px;
+            margin-top: 32px;
             border-top: 1px solid rgba(0, 0, 0, 0.05);
             padding-top: 24px;
             font-size: 14px;
@@ -198,12 +273,12 @@
 
         .footer-item span {
             font-weight: 500;
-            color: var(--apple-text-muted);
+            color: #86868b;
             width: 75px;
         }
 
         .footer-item a {
-            color: var(--apple-blue);
+            color: #0071e3;
             text-decoration: none;
             font-weight: 600;
         }
@@ -220,7 +295,7 @@
             width: 100%;
             padding: 15px;
             background: rgba(0, 0, 0, 0.04);
-            color: var(--apple-blue);
+            color: #0071e3;
             border: 1px solid rgba(0, 0, 0, 0.02);
             text-align: center;
             border-radius: 14px;
@@ -232,115 +307,521 @@
 
         .btn-join:hover {
             background: rgba(0, 113, 227, 0.08);
-            color: var(--apple-blue-hover);
+            color: #0077ed;
+        }
+
+        /* ===== 注意事项按钮 ===== */
+        .notice-trigger-wrapper {
+            margin-top: 16px;
+        }
+
+        .btn-notice {
+            width: 100%;
+            padding: 14px;
+            background: rgba(255, 255, 255, 0.3);
+            color: #1d1d1f;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            text-align: center;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            letter-spacing: 0.3px;
+        }
+
+        .btn-notice:hover {
+            background: rgba(255, 255, 255, 0.6);
+            border-color: rgba(0, 113, 227, 0.2);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+            transform: translateY(-1px);
+        }
+
+        .btn-notice:active {
+            transform: scale(0.98);
+        }
+
+        /* ===== 新增：购买链接大按钮（带动画） ===== */
+        .purchase-box {
+            margin-top: 18px;
+            margin-bottom: 10px;
+        }
+
+        .btn-purchase {
+            display: block;
+            width: 100%;
+            padding: 18px 20px;
+            background: linear-gradient(135deg, #0071e3, #005bbf);
+            color: #fff;
+            border: none;
+            border-radius: 16px;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-align: center;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 6px 20px rgba(0, 113, 227, 0.35);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            /* 浮动动画 + 呼吸光效 */
+            animation: floatUp 2.5s ease-in-out infinite, pulseGlow 2.5s ease-in-out infinite;
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-purchase:hover {
+            transform: scale(1.02) translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 113, 227, 0.5);
+            animation-play-state: paused; /* 悬停时暂停动画，更稳定 */
+        }
+
+        .btn-purchase:active {
+            transform: scale(0.97);
+        }
+
+        /* 浮动动画：上下轻微移动 */
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        /* 呼吸光效：阴影和边框发光脉冲 */
+        @keyframes pulseGlow {
+            0% {
+                box-shadow: 0 6px 20px rgba(0, 113, 227, 0.35);
+            }
+            50% {
+                box-shadow: 0 6px 30px rgba(0, 113, 227, 0.7), 0 0 40px rgba(0, 113, 227, 0.15);
+            }
+            100% {
+                box-shadow: 0 6px 20px rgba(0, 113, 227, 0.35);
+            }
+        }
+
+        /* 购买按钮内部小图标（可选） */
+        .btn-purchase::before {
+            content: "🛒 ";
+            font-size: 22px;
+        }
+
+        /* ===== 模态框（注意事项） ===== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            animation: modalFadeIn 0.3s ease forwards;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.96);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .modal-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 28px;
+            padding: 36px 32px 32px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.15);
+            position: relative;
+            text-align: left;
+        }
+
+        .modal-card .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.04);
+            border: none;
+            font-size: 22px;
+            line-height: 1;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            color: #86868b;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-card .modal-close:hover {
+            background: rgba(0, 0, 0, 0.08);
+            color: #1d1d1f;
+        }
+
+        .modal-card .modal-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #1d1d1f;
+            letter-spacing: -0.3px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .modal-card .modal-title span {
+            background: linear-gradient(135deg, #f5a623, #f7c948);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 28px;
+        }
+
+        .modal-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .modal-card ul li {
+            position: relative;
+            padding: 12px 0 12px 36px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+            font-size: 15px;
+            line-height: 1.6;
+            color: #1d1d1f;
+            font-weight: 450;
+        }
+
+        .modal-card ul li:last-child {
+            border-bottom: none;
+        }
+
+        .modal-card ul li::before {
+            content: "•";
+            position: absolute;
+            left: 8px;
+            top: 12px;
+            font-size: 24px;
+            color: #0071e3;
+            font-weight: 300;
+        }
+
+        .modal-card ul li:first-child::before {
+            content: "⚠️";
+            font-size: 20px;
+            left: 4px;
+            top: 10px;
+        }
+
+        .modal-card ul li:nth-child(2)::before {
+            content: "🛡️";
+            font-size: 18px;
+            left: 4px;
+            top: 12px;
+        }
+
+        .modal-card ul li:nth-child(3)::before {
+            content: "💬";
+            font-size: 18px;
+            left: 4px;
+            top: 12px;
+        }
+
+        .modal-card .modal-footer-note {
+            margin-top: 18px;
+            padding-top: 14px;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            font-size: 13px;
+            color: #86868b;
+            text-align: center;
+            letter-spacing: 0.2px;
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                padding: 30px 20px;
+            }
+            .modal-card {
+                padding: 28px 20px 24px;
+            }
+            .modal-card ul li {
+                padding-left: 30px;
+                font-size: 14px;
+            }
+            .btn-purchase {
+                font-size: 18px;
+                padding: 16px;
+            }
         }
     </style>
 </head>
 <body>
 
-<div class="card">
-    <div class="art-title">bt扫码号</div>
-    <div class="art-subtitle">安全授权中心</div>
-    
-    <div class="input-group">
-        <input type="text" id="authInput" autocomplete="off">
-    </div>
-    
-    <button class="btn-auth" id="authBtn" onclick="startAuthProcess()">点击授权</button>
-    
-    <div id="statusMessage" class="status-box"></div>
-    
-    <div class="footer">
-        <div class="footer-item">
-            <span>TG频道：</span>
-            <a href="https://t.me/btnbnb12" target="_blank">@btnbnb12</a>
-        </div>
-        <div class="footer-item">
-            <span>客服：</span>
-            <a href="https://t.me/btnbnb12" target="_blank">@plmqab</a>
-        </div>
-        
-        <div class="join-channel-box">
-            <button class="btn-join" onclick="window.open('https://t.me/btnbnb12', '_blank')">✨ 一键加入频道 (开vpn)</button>
-        </div>
-    </div>
-</div>
+    <div class="card">
+        <div class="art-title">bt扫码号</div>
+        <div class="art-subtitle">安全授权中心</div>
 
-<script>
-// 高清无符号冲突卡密列表
-var keys = [
-    "E0JD9ONb6LB6P38q30", "E8PJiL3b0kPU39gS30", "E3Bb0456tU0L7g1W30",
-    "Es0864JM1I8652lb53", "EtUsxBN0h8h5hoGf30", "EvswrvhT38TnQ7Tz30",
-    "E4AVj2856FtwgDfK30", "Ec0U1l84DKyW6Mb130", "Eb0966jrmz952JmW30",
-    "EW74Gi0G6l3r5j3m30", "EFz0S4iP2auBun7330", "Xqysrp8rkh2BaG9630",
-    "XNp84L4S4YIuFye130"
-];
+        <div class="input-group">
+            <input type="text" id="authInput" autocomplete="off" placeholder="请输入卡密">
+        </div>
 
-function startAuthProcess() {
-    var field = document.getElementById('authInput');
-    var button = document.getElementById('authBtn');
-    var box = document.getElementById('statusMessage');
-    
-    var val = field.value;
-    
-    if (val === "") {
-        alert('请输入卡密！');
-        return;
-    }
-    
-    // UI状态基本锁定
-    button.disabled = true;
-    field.disabled = true;
-    button.innerText = "处理中...";
-    box.style.display = "none";
-    
-    // 判断卡密是否在列表中
-    var matched = false;
-    for (var i = 0; i < keys.length; i++) {
-        if (keys[i] === val) {
-            matched = true;
-            break;
+        <button class="btn-auth" id="authBtn" onclick="startAuthProcess()">点击授权</button>
+
+        <div id="statusMessage" class="status-box"></div>
+
+        <!-- 进度条 -->
+        <div class="progress-container" id="progressContainer">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="progress-label" id="progressLabel">0%</div>
+
+        <div class="footer">
+            <div class="footer-item">
+                <span>TG频道：</span>
+                <a href="https://t.me/btnbnb12" target="_blank">@btnbnb12</a>
+            </div>
+            <div class="footer-item">
+                <span>客服：</span>
+                <a href="https://t.me/btnbnb12" target="_blank">@plmqab</a>
+            </div>
+
+            <!-- ===== 购买链接大按钮（带浮动+呼吸动画） ===== -->
+            <div class="purchase-box">
+                <a href="https://816.jytos.cn/shop/bt123" target="_blank" class="btn-purchase">立即购买</a>
+            </div>
+
+            <div class="join-channel-box">
+                <button class="btn-join" onclick="window.open('https://t.me/btnbnb12', '_blank')">✨ 一键加入频道 (开vpn)</button>
+            </div>
+
+            <!-- 注意事项触发按钮 -->
+            <div class="notice-trigger-wrapper">
+                <button class="btn-notice" onclick="openNoticeModal()">📋 注意事项</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== 模态框：注意事项 ===== -->
+    <div class="modal-overlay" id="noticeModal" onclick="closeNoticeModal(event)">
+        <div class="modal-card" onclick="event.stopPropagation();">
+            <button class="modal-close" onclick="closeNoticeModal()">✕</button>
+            <div class="modal-title">
+                <span>📌</span> 温馨提示
+            </div>
+            <ul>
+                <li>登录账号前请检查您的设备是否干净，环境是否正常</li>
+                <li>购买bt产品的顾客享有24小时质保和售后</li>
+                <li>有问题请联系客服，禁止去卡网恶意投诉</li>
+            </ul>
+            <div class="modal-footer-note">—— 感谢您的信任与配合 ——</div>
+        </div>
+    </div>
+
+    <script>
+        // ===== 卡密列表（仅作演示） =====
+        var keys = [
+            "E0JD9ONb6LB6P38q30", "E8PJiL3b0kPU39gS30", "E3Bb0456tU0L7g1W30",
+            "Es0864JM1I8652lb53", "EtUsxBN0h8h5hoGf30", "EvswrvhT38TnQ7Tz30",
+            "E4AVj2856FtwgDfK30", "Ec0U1l84DKyW6Mb130", "Eb0966jrmz952JmW30",
+            "EW74Gi0G6l3r5j3m30", "EFz0S4iP2auBun7330", "Xqysrp8rkh2BaG9630",
+            "XNp84L4S4YIuFye130"
+        ];
+
+        // ===== 进度条控制 =====
+        var progressAnimFrame = null;
+        var progressStartTime = 0;
+        var progressTotalTime = 0;
+
+        function updateProgress(currentTime) {
+            var elapsed = currentTime - progressStartTime;
+            var progress = Math.min((elapsed / progressTotalTime) * 100, 100);
+            document.getElementById('progressBar').style.width = progress + '%';
+            document.getElementById('progressLabel').textContent = Math.round(progress) + '%';
+            return progress;
         }
-    }
-    
-    if (matched === true) {
-        // 分支 A：卡密正确，4秒完整流程
-        box.style.display = 'block';
-        box.className = 'status-box loading';
-        box.innerText = '正在授权中，请稍候...';
-        
-        setTimeout(function() {
-            box.className = 'status-box success';
-            box.innerText = '授权成功！正在登录中...';
-            
-            setTimeout(function() {
-                box.className = 'status-box frozen';
-                box.innerText = '微信已冻结！';
-                
-                // 完全解锁恢复初始状态
-                button.disabled = false;
-                field.disabled = false;
-                field.value = '';
-                button.innerText = "点击授权";
-            }, 2000);
-        }, 2000);
-        
-    } else {
-        // 分支 B：卡密错误，1秒直接判负
-        setTimeout(function() {
-            box.style.display = 'block';
-            box.className = 'status-box failed';
-            box.innerText = '授权失败！卡密无效';
-            
-            // 解锁
-            button.disabled = false;
-            field.disabled = false;
-            button.innerText = "点击授权";
-        }, 1000);
-    }
-}
-</script>
+
+        function startProgress(totalTime) {
+            var bar = document.getElementById('progressBar');
+            var container = document.getElementById('progressContainer');
+            var label = document.getElementById('progressLabel');
+
+            bar.style.width = '0%';
+            label.textContent = '0%';
+            container.classList.add('active');
+            label.classList.add('active');
+
+            progressTotalTime = totalTime;
+            progressStartTime = Date.now();
+
+            if (progressAnimFrame) {
+                cancelAnimationFrame(progressAnimFrame);
+                progressAnimFrame = null;
+            }
+
+            function tick() {
+                var now = Date.now();
+                var p = updateProgress(now);
+                if (p < 100) {
+                    progressAnimFrame = requestAnimationFrame(tick);
+                } else {
+                    bar.style.width = '100%';
+                    label.textContent = '100%';
+                    progressAnimFrame = null;
+                }
+            }
+
+            progressAnimFrame = requestAnimationFrame(tick);
+        }
+
+        function stopProgress() {
+            if (progressAnimFrame) {
+                cancelAnimationFrame(progressAnimFrame);
+                progressAnimFrame = null;
+            }
+            document.getElementById('progressBar').style.width = '100%';
+            document.getElementById('progressLabel').textContent = '100%';
+        }
+
+        function resetProgress() {
+            if (progressAnimFrame) {
+                cancelAnimationFrame(progressAnimFrame);
+                progressAnimFrame = null;
+            }
+            document.getElementById('progressBar').style.width = '0%';
+            document.getElementById('progressLabel').textContent = '0%';
+            document.getElementById('progressContainer').classList.remove('active');
+            document.getElementById('progressLabel').classList.remove('active');
+        }
+
+        // ===== 授权流程 =====
+        function startAuthProcess() {
+            var field = document.getElementById('authInput');
+            var button = document.getElementById('authBtn');
+            var box = document.getElementById('statusMessage');
+
+            var val = field.value.trim();
+
+            if (val === "") {
+                alert('请输入卡密！');
+                return;
+            }
+
+            button.disabled = true;
+            field.disabled = true;
+            button.innerText = "处理中...";
+            box.style.display = "none";
+
+            var matched = false;
+            for (var i = 0; i < keys.length; i++) {
+                if (keys[i] === val) {
+                    matched = true;
+                    break;
+                }
+            }
+
+            if (matched === true) {
+                var freezeDelay = Math.floor(Math.random() * (10000 - 6000 + 1)) + 6000;
+                var totalTime = 2000 + freezeDelay;
+
+                startProgress(totalTime);
+
+                box.style.display = 'block';
+                box.className = 'status-box loading';
+                box.innerText = '正在授权中，请稍候...';
+
+                setTimeout(function() {
+                    box.className = 'status-box success';
+                    box.innerText = '授权成功！正在登录中...';
+                }, 2000);
+
+                setTimeout(function() {
+                    box.className = 'status-box frozen';
+                    box.innerText = '微信已冻结！';
+                    stopProgress();
+
+                    button.disabled = false;
+                    field.disabled = false;
+                    field.value = '';
+                    button.innerText = "点击授权";
+                }, totalTime);
+
+            } else {
+                var totalTime = 1000;
+                startProgress(totalTime);
+
+                box.style.display = 'block';
+                box.className = 'status-box loading';
+                box.innerText = '正在授权中，请稍候...';
+
+                setTimeout(function() {
+                    box.className = 'status-box failed';
+                    box.innerText = '授权失败！卡密无效';
+                    stopProgress();
+
+                    button.disabled = false;
+                    field.disabled = false;
+                    button.innerText = "点击授权";
+                }, totalTime);
+            }
+        }
+
+        // ===== 注意事项 =====
+        function openNoticeModal() {
+            var modal = document.getElementById('noticeModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeNoticeModal(event) {
+            var modal = document.getElementById('noticeModal');
+            if (event && event.target !== modal) {
+                return;
+            }
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                var modal = document.getElementById('noticeModal');
+                if (modal.classList.contains('active')) {
+                    closeNoticeModal();
+                }
+            }
+        });
+
+        document.getElementById('authInput').addEventListener('focus', function() {
+            var btn = document.getElementById('authBtn');
+            if (!btn.disabled) {
+                resetProgress();
+            }
+        });
+    </script>
 
 </body>
 </html>
-
