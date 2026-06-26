@@ -75,7 +75,7 @@
         .art-title {
             font-size: 40px;
             font-weight: 800;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
             background: linear-gradient(135deg, #2c3e50 0%, #000000 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -89,11 +89,48 @@
             font-size: 13px;
             letter-spacing: 3px;
             color: #86868b;
-            margin-bottom: 35px;
+            margin-bottom: 16px;
             font-weight: 600;
             text-transform: uppercase;
             position: relative;
             z-index: 1;
+        }
+
+        /* ===== 扫码号使用说明（顶部显眼位置） ===== */
+        .usage-box {
+            margin-bottom: 22px;
+            padding: 14px 18px;
+            background: linear-gradient(135deg, #0071e3, #005bbf);
+            border-radius: 14px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 1.6;
+            text-align: center;
+            box-shadow: 0 4px 16px rgba(0, 113, 227, 0.2);
+            position: relative;
+            z-index: 1;
+            animation: usagePulse 2.5s ease-in-out infinite;
+        }
+
+        .usage-box .usage-icon {
+            font-size: 18px;
+            margin-right: 6px;
+        }
+
+        .usage-box .highlight {
+            font-weight: 700;
+            color: #ffd700;
+        }
+
+        @keyframes usagePulse {
+            0%,
+            100% {
+                box-shadow: 0 4px 16px rgba(0, 113, 227, 0.2);
+            }
+            50% {
+                box-shadow: 0 4px 28px rgba(0, 113, 227, 0.4);
+            }
         }
 
         /* ===== 输入框 ===== */
@@ -287,44 +324,115 @@
             text-decoration: underline;
         }
 
-        .join-channel-box {
-            margin-top: 22px;
+        /* ===== 统一三个按钮的尺寸 ===== */
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 18px;
         }
 
-        .btn-join {
+        /* 购买按钮 - 保留渐变和动画 */
+        .btn-purchase {
+            display: block;
             width: 100%;
-            padding: 15px;
+            padding: 16px 20px;
+            background: linear-gradient(135deg, #0071e3, #005bbf);
+            color: #fff;
+            border: none;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            text-align: center;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 6px 20px rgba(0, 113, 227, 0.3);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            animation: floatUp 2.5s ease-in-out infinite, pulseGlow 2.5s ease-in-out infinite;
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-purchase:hover {
+            transform: scale(1.02) translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 113, 227, 0.45);
+            animation-play-state: paused;
+        }
+
+        .btn-purchase:active {
+            transform: scale(0.97);
+        }
+
+        .btn-purchase .purchase-icon {
+            font-size: 18px;
+            margin-right: 6px;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-4px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        @keyframes pulseGlow {
+            0% {
+                box-shadow: 0 6px 20px rgba(0, 113, 227, 0.3);
+            }
+            50% {
+                box-shadow: 0 6px 30px rgba(0, 113, 227, 0.6), 0 0 40px rgba(0, 113, 227, 0.1);
+            }
+            100% {
+                box-shadow: 0 6px 20px rgba(0, 113, 227, 0.3);
+            }
+        }
+
+        /* 一键加入频道 - 与购买按钮同尺寸 */
+        .btn-join {
+            display: block;
+            width: 100%;
+            padding: 16px 20px;
             background: rgba(0, 0, 0, 0.04);
             color: #0071e3;
-            border: 1px solid rgba(0, 0, 0, 0.02);
-            text-align: center;
+            border: 1px solid rgba(0, 0, 0, 0.04);
             border-radius: 14px;
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 600;
+            text-align: center;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.25s ease;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
         }
 
         .btn-join:hover {
-            background: rgba(0, 113, 227, 0.08);
-            color: #0077ed;
+            background: rgba(0, 113, 227, 0.06);
+            border-color: rgba(0, 113, 227, 0.12);
+            transform: translateY(-1px);
         }
 
-        /* ===== 注意事项按钮 ===== */
-        .notice-trigger-wrapper {
-            margin-top: 16px;
+        .btn-join:active {
+            transform: scale(0.98);
         }
 
+        /* 注意事项 - 与购买按钮同尺寸 */
         .btn-notice {
+            display: block;
             width: 100%;
-            padding: 14px;
+            padding: 16px 20px;
             background: rgba(255, 255, 255, 0.3);
             color: #1d1d1f;
             border: 1px solid rgba(0, 0, 0, 0.06);
-            text-align: center;
             border-radius: 14px;
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 500;
+            text-align: center;
             cursor: pointer;
             transition: all 0.25s ease;
             backdrop-filter: blur(4px);
@@ -334,83 +442,13 @@
 
         .btn-notice:hover {
             background: rgba(255, 255, 255, 0.6);
-            border-color: rgba(0, 113, 227, 0.2);
+            border-color: rgba(0, 113, 227, 0.15);
             box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
             transform: translateY(-1px);
         }
 
         .btn-notice:active {
             transform: scale(0.98);
-        }
-
-        /* ===== 新增：购买链接大按钮（带动画） ===== */
-        .purchase-box {
-            margin-top: 18px;
-            margin-bottom: 10px;
-        }
-
-        .btn-purchase {
-            display: block;
-            width: 100%;
-            padding: 18px 20px;
-            background: linear-gradient(135deg, #0071e3, #005bbf);
-            color: #fff;
-            border: none;
-            border-radius: 16px;
-            font-size: 20px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            text-align: center;
-            cursor: pointer;
-            text-decoration: none;
-            box-shadow: 0 6px 20px rgba(0, 113, 227, 0.35);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            /* 浮动动画 + 呼吸光效 */
-            animation: floatUp 2.5s ease-in-out infinite, pulseGlow 2.5s ease-in-out infinite;
-            position: relative;
-            z-index: 1;
-        }
-
-        .btn-purchase:hover {
-            transform: scale(1.02) translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 113, 227, 0.5);
-            animation-play-state: paused; /* 悬停时暂停动画，更稳定 */
-        }
-
-        .btn-purchase:active {
-            transform: scale(0.97);
-        }
-
-        /* 浮动动画：上下轻微移动 */
-        @keyframes floatUp {
-            0% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-5px);
-            }
-            100% {
-                transform: translateY(0px);
-            }
-        }
-
-        /* 呼吸光效：阴影和边框发光脉冲 */
-        @keyframes pulseGlow {
-            0% {
-                box-shadow: 0 6px 20px rgba(0, 113, 227, 0.35);
-            }
-            50% {
-                box-shadow: 0 6px 30px rgba(0, 113, 227, 0.7), 0 0 40px rgba(0, 113, 227, 0.15);
-            }
-            100% {
-                box-shadow: 0 6px 20px rgba(0, 113, 227, 0.35);
-            }
-        }
-
-        /* 购买按钮内部小图标（可选） */
-        .btn-purchase::before {
-            content: "🛒 ";
-            font-size: 22px;
         }
 
         /* ===== 模态框（注意事项） ===== */
@@ -532,7 +570,7 @@
         }
 
         .modal-card ul li:first-child::before {
-            content: "⚠️";
+            content: "";
             font-size: 20px;
             left: 4px;
             top: 10px;
@@ -573,9 +611,11 @@
                 padding-left: 30px;
                 font-size: 14px;
             }
-            .btn-purchase {
-                font-size: 18px;
-                padding: 16px;
+            .btn-purchase,
+            .btn-join,
+            .btn-notice {
+                padding: 14px 16px;
+                font-size: 15px;
             }
         }
     </style>
@@ -585,6 +625,12 @@
     <div class="card">
         <div class="art-title">bt扫码号</div>
         <div class="art-subtitle">安全授权中心</div>
+
+        <!-- ===== 扫码号使用说明（顶部显眼位置） ===== -->
+        <div class="usage-box">
+            <span class="usage-icon"></span>
+            下单成功后，账号会以<span class="highlight">卡密</span>的形式发货，在上号器输入卡密即可登录
+        </div>
 
         <div class="input-group">
             <input type="text" id="authInput" autocomplete="off" placeholder="请输入卡密">
@@ -602,26 +648,32 @@
 
         <div class="footer">
             <div class="footer-item">
-                <span>TG频道：</span>
+                <span> 频道</span>
                 <a href="https://t.me/btnbnb12" target="_blank">@btnbnb12</a>
             </div>
             <div class="footer-item">
-                <span>客服：</span>
+                <span> 客服</span>
                 <a href="https://t.me/btnbnb12" target="_blank">@plmqab</a>
             </div>
 
-            <!-- ===== 购买链接大按钮（带浮动+呼吸动画） ===== -->
-            <div class="purchase-box">
-                <a href="https://816.jytos.cn/shop/bt123" target="_blank" class="btn-purchase">立即购买</a>
-            </div>
+            <!-- ===== 三个按钮统一尺寸 ===== -->
+            <div class="btn-group">
 
-            <div class="join-channel-box">
-                <button class="btn-join" onclick="window.open('https://t.me/btnbnb12', '_blank')">✨ 一键加入频道 (开vpn)</button>
-            </div>
+                <!-- 购买扫码号 -->
+                <a href="https://816.jytos.cn/shop/bt123" target="_blank" class="btn-purchase">
+                    <span class="purchase-icon"></span> 购买扫码号
+                </a>
 
-            <!-- 注意事项触发按钮 -->
-            <div class="notice-trigger-wrapper">
-                <button class="btn-notice" onclick="openNoticeModal()">📋 注意事项</button>
+                <!-- 一键加入频道 -->
+                <button class="btn-join" onclick="window.open('https://t.me/btnbnb12', '_blank')">
+                     一键加入频道 <span style="font-weight:300;opacity:0.5;">(开vpn)</span>
+                </button>
+
+                <!-- 注意事项 -->
+                <button class="btn-notice" onclick="openNoticeModal()">
+                     注意事项
+                </button>
+
             </div>
         </div>
     </div>
@@ -631,7 +683,7 @@
         <div class="modal-card" onclick="event.stopPropagation();">
             <button class="modal-close" onclick="closeNoticeModal()">✕</button>
             <div class="modal-title">
-                <span>📌</span> 温馨提示
+                <span></span> 温馨提示
             </div>
             <ul>
                 <li>登录账号前请检查您的设备是否干净，环境是否正常</li>
@@ -790,7 +842,7 @@
             }
         }
 
-        // ===== 注意事项 =====
+        // ===== 注意事项模态框 =====
         function openNoticeModal() {
             var modal = document.getElementById('noticeModal');
             modal.classList.add('active');
