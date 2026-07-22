@@ -94,6 +94,22 @@
             0%, 100% { box-shadow: 0 4px 16px rgba(0, 113, 227, 0.2); }
             50% { box-shadow: 0 4px 28px rgba(0, 113, 227, 0.4); }
         }
+        .media-box {
+            margin-bottom: 18px;
+            width: 100%;
+            border-radius: 14px;
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+        }
+        .media-box img, .media-box video {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            display: block;
+            border-radius: 14px;
+            border: 1px solid rgba(0,0,0,0.04);
+        }
         .input-group { margin-bottom: 20px; position: relative; z-index: 1; }
         input {
             width: 100%;
@@ -275,28 +291,6 @@
             50% { box-shadow: 0 6px 30px rgba(0, 113, 227, 0.6), 0 0 40px rgba(0, 113, 227, 0.1); }
             100% { box-shadow: 0 6px 20px rgba(0, 113, 227, 0.3); }
         }
-        .btn-join {
-            display: block;
-            width: 100%;
-            padding: 16px 20px;
-            background: rgba(0, 0, 0, 0.04);
-            color: #0071e3;
-            border: 1px solid rgba(0, 0, 0, 0.04);
-            border-radius: 14px;
-            font-size: 16px;
-            font-weight: 600;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-        }
-        .btn-join:hover {
-            background: rgba(0, 113, 227, 0.06);
-            border-color: rgba(0, 113, 227, 0.12);
-            transform: translateY(-1px);
-        }
-        .btn-join:active { transform: scale(0.98); }
         .btn-notice {
             display: block;
             width: 100%;
@@ -321,8 +315,6 @@
             transform: translateY(-1px);
         }
         .btn-notice:active { transform: scale(0.98); }
-
-        /* 模态框 */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -418,8 +410,6 @@
             text-align: center;
             letter-spacing: 0.2px;
         }
-
-        /* 自定义弹窗 */
         .custom-alert-overlay {
             position: fixed;
             top: 0;
@@ -471,12 +461,11 @@
             box-shadow: 0 6px 16px rgba(0, 113, 227, 0.35);
         }
         .custom-alert-box .alert-btn:active { transform: scale(0.96); }
-
         @media (max-width: 480px) {
             .card { padding: 30px 20px; }
             .modal-card { padding: 28px 20px 24px; }
             .modal-card ul li { padding-left: 24px; font-size: 14px; }
-            .btn-purchase, .btn-join, .btn-notice { padding: 14px 16px; font-size: 15px; }
+            .btn-purchase, .btn-notice { padding: 14px 16px; font-size: 15px; }
             .custom-alert-box { padding: 24px 20px; }
         }
     </style>
@@ -489,6 +478,11 @@
 
     <div class="usage-box">
         下单成功后，账号会以<span class="highlight">卡密</span>的形式发货，在上号器输入卡密即可登录
+    </div>
+
+    <!-- 图片 -->
+    <div class="media-box">
+        <img src="pic.jpg" alt="展示图片" id="myImage">
     </div>
 
     <div class="input-group">
@@ -514,9 +508,14 @@
             <a href="https://t.me/btnbnb12" target="_blank">@plmqab</a>
         </div>
 
+        <!-- 视频 -->
+        <div class="media-box">
+            <video src="video.mp4" controls id="myVideo"></video>
+        </div>
+
         <div class="btn-group">
             <a href="https://816.jytos.cn/shop/bt123" target="_blank" class="btn-purchase">购买扫码号</a>
-            <button class="btn-join" onclick="window.open('https://t.me/btnbnb12', '_blank')">一键加入频道 (开vpn)</button>
+            <!-- 一键加入频道按钮已删除 -->
             <button class="btn-notice" onclick="openNoticeModal()">注意事项</button>
         </div>
     </div>
