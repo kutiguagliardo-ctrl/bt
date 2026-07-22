@@ -1,19 +1,11 @@
-<style>body {display: none;}</style>
-<script src="weiyan.js"></script>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>bt扫码号 · 安全授权中心</title>
     <style>
-        /* ===== 全局重置 & 字体 ===== */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             background: linear-gradient(135deg, #f5f7fa 0%, #e4ecfa 35%, #f4e9f7 70%, #fef0ef 100%);
@@ -27,8 +19,6 @@
             -webkit-font-smoothing: antialiased;
             padding: 20px;
         }
-
-        /* ===== 毛玻璃卡片 ===== */
         .card {
             background: rgba(255, 255, 255, 0.65);
             padding: 45px 32px;
@@ -42,10 +32,7 @@
             text-align: center;
             position: relative;
             overflow: hidden;
-            transition: transform 0.2s ease;
         }
-
-        /* 卡片顶部流光动画 */
         .card::after {
             content: '';
             position: absolute;
@@ -58,20 +45,11 @@
             animation: cardShine 4s ease-in-out infinite;
             pointer-events: none;
         }
-
         @keyframes cardShine {
-            0% {
-                left: -60%;
-            }
-            30% {
-                left: 140%;
-            }
-            100% {
-                left: 140%;
-            }
+            0% { left: -60%; }
+            30% { left: 140%; }
+            100% { left: 140%; }
         }
-
-        /* ===== 标题区 ===== */
         .art-title {
             font-size: 40px;
             font-weight: 800;
@@ -80,11 +58,9 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             letter-spacing: -0.5px;
-            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.05));
             position: relative;
             z-index: 1;
         }
-
         .art-subtitle {
             font-size: 13px;
             letter-spacing: 3px;
@@ -95,8 +71,6 @@
             position: relative;
             z-index: 1;
         }
-
-        /* ===== 扫码号使用说明（顶部显眼位置） ===== */
         .usage-box {
             margin-bottom: 22px;
             padding: 14px 18px;
@@ -112,34 +86,15 @@
             z-index: 1;
             animation: usagePulse 2.5s ease-in-out infinite;
         }
-
-        .usage-box .usage-icon {
-            font-size: 18px;
-            margin-right: 6px;
-        }
-
         .usage-box .highlight {
             font-weight: 700;
             color: #ffd700;
         }
-
         @keyframes usagePulse {
-            0%,
-            100% {
-                box-shadow: 0 4px 16px rgba(0, 113, 227, 0.2);
-            }
-            50% {
-                box-shadow: 0 4px 28px rgba(0, 113, 227, 0.4);
-            }
+            0%, 100% { box-shadow: 0 4px 16px rgba(0, 113, 227, 0.2); }
+            50% { box-shadow: 0 4px 28px rgba(0, 113, 227, 0.4); }
         }
-
-        /* ===== 输入框 ===== */
-        .input-group {
-            margin-bottom: 20px;
-            position: relative;
-            z-index: 1;
-        }
-
+        .input-group { margin-bottom: 20px; position: relative; z-index: 1; }
         input {
             width: 100%;
             padding: 16px;
@@ -153,19 +108,12 @@
             font-weight: 500;
             box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.02);
         }
-
         input:focus {
             border-color: #0071e3;
             background-color: #ffffff;
             box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.15);
         }
-
-        input:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
-        /* ===== 授权按钮 ===== */
+        input:disabled { opacity: 0.6; cursor: not-allowed; }
         button.btn-auth {
             width: 100%;
             padding: 16px;
@@ -181,20 +129,16 @@
             position: relative;
             z-index: 1;
         }
-
         button.btn-auth:hover {
             background: #0077ed;
             box-shadow: 0 6px 16px rgba(0, 113, 227, 0.3);
         }
-
         button.btn-auth:disabled {
             background: #d2d2d7 !important;
             color: #86868b !important;
             box-shadow: none !important;
             cursor: not-allowed;
         }
-
-        /* ===== 状态消息框 ===== */
         .status-box {
             margin-top: 20px;
             padding: 14px;
@@ -204,18 +148,10 @@
             display: none;
             animation: appleFadeIn 0.3s ease forwards;
         }
-
         @keyframes appleFadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-
         .loading {
             background: rgba(0, 113, 227, 0.08);
             color: #0066cc;
@@ -237,21 +173,11 @@
             border: 1px solid rgba(255, 59, 48, 0.2);
             animation: appleShake 0.4s ease-in-out;
         }
-
         @keyframes appleShake {
-            0%,
-            100% {
-                transform: translateX(0);
-            }
-            25% {
-                transform: translateX(-5px);
-            }
-            75% {
-                transform: translateX(5px);
-            }
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
         }
-
-        /* ===== 进度条 ===== */
         .progress-container {
             margin-top: 14px;
             width: 100%;
@@ -262,11 +188,7 @@
             opacity: 0;
             transition: opacity 0.3s ease;
         }
-
-        .progress-container.active {
-            opacity: 1;
-        }
-
+        .progress-container.active { opacity: 1; }
         .progress-bar {
             height: 100%;
             width: 0%;
@@ -276,7 +198,6 @@
             transition: width 0.15s linear;
             will-change: width;
         }
-
         .progress-label {
             font-size: 12px;
             color: #86868b;
@@ -288,12 +209,7 @@
             height: 18px;
             line-height: 18px;
         }
-
-        .progress-label.active {
-            opacity: 1;
-        }
-
-        /* ===== 底部区域 ===== */
+        .progress-label.active { opacity: 1; }
         .footer {
             margin-top: 32px;
             border-top: 1px solid rgba(0, 0, 0, 0.05);
@@ -301,38 +217,28 @@
             font-size: 14px;
             text-align: left;
         }
-
         .footer-item {
             display: flex;
             align-items: center;
             margin-bottom: 12px;
         }
-
         .footer-item span {
             font-weight: 500;
             color: #86868b;
             width: 75px;
         }
-
         .footer-item a {
             color: #0071e3;
             text-decoration: none;
             font-weight: 600;
         }
-
-        .footer-item a:hover {
-            text-decoration: underline;
-        }
-
-        /* ===== 统一三个按钮的尺寸 ===== */
+        .footer-item a:hover { text-decoration: underline; }
         .btn-group {
             display: flex;
             flex-direction: column;
             gap: 12px;
             margin-top: 18px;
         }
-
-        /* 购买按钮 - 保留渐变和动画 */
         .btn-purchase {
             display: block;
             width: 100%;
@@ -353,47 +259,22 @@
             position: relative;
             z-index: 1;
         }
-
         .btn-purchase:hover {
             transform: scale(1.02) translateY(-2px);
             box-shadow: 0 10px 30px rgba(0, 113, 227, 0.45);
             animation-play-state: paused;
         }
-
-        .btn-purchase:active {
-            transform: scale(0.97);
-        }
-
-        .btn-purchase .purchase-icon {
-            font-size: 18px;
-            margin-right: 6px;
-        }
-
+        .btn-purchase:active { transform: scale(0.97); }
         @keyframes floatUp {
-            0% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-4px);
-            }
-            100% {
-                transform: translateY(0px);
-            }
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-4px); }
+            100% { transform: translateY(0px); }
         }
-
         @keyframes pulseGlow {
-            0% {
-                box-shadow: 0 6px 20px rgba(0, 113, 227, 0.3);
-            }
-            50% {
-                box-shadow: 0 6px 30px rgba(0, 113, 227, 0.6), 0 0 40px rgba(0, 113, 227, 0.1);
-            }
-            100% {
-                box-shadow: 0 6px 20px rgba(0, 113, 227, 0.3);
-            }
+            0% { box-shadow: 0 6px 20px rgba(0, 113, 227, 0.3); }
+            50% { box-shadow: 0 6px 30px rgba(0, 113, 227, 0.6), 0 0 40px rgba(0, 113, 227, 0.1); }
+            100% { box-shadow: 0 6px 20px rgba(0, 113, 227, 0.3); }
         }
-
-        /* 一键加入频道 - 与购买按钮同尺寸 */
         .btn-join {
             display: block;
             width: 100%;
@@ -410,18 +291,12 @@
             backdrop-filter: blur(4px);
             -webkit-backdrop-filter: blur(4px);
         }
-
         .btn-join:hover {
             background: rgba(0, 113, 227, 0.06);
             border-color: rgba(0, 113, 227, 0.12);
             transform: translateY(-1px);
         }
-
-        .btn-join:active {
-            transform: scale(0.98);
-        }
-
-        /* 注意事项 - 与购买按钮同尺寸 */
+        .btn-join:active { transform: scale(0.98); }
         .btn-notice {
             display: block;
             width: 100%;
@@ -439,19 +314,15 @@
             -webkit-backdrop-filter: blur(4px);
             letter-spacing: 0.3px;
         }
-
         .btn-notice:hover {
             background: rgba(255, 255, 255, 0.6);
             border-color: rgba(0, 113, 227, 0.15);
             box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
             transform: translateY(-1px);
         }
+        .btn-notice:active { transform: scale(0.98); }
 
-        .btn-notice:active {
-            transform: scale(0.98);
-        }
-
-        /* ===== 模态框（注意事项） ===== */
+        /* 模态框 */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -467,22 +338,11 @@
             z-index: 9999;
             animation: modalFadeIn 0.3s ease forwards;
         }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
+        .modal-overlay.active { display: flex; }
         @keyframes modalFadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.96);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
+            from { opacity: 0; transform: scale(0.96); }
+            to { opacity: 1; transform: scale(1); }
         }
-
         .modal-card {
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(24px);
@@ -496,14 +356,13 @@
             position: relative;
             text-align: left;
         }
-
         .modal-card .modal-close {
             position: absolute;
             top: 16px;
             right: 20px;
             background: rgba(0, 0, 0, 0.04);
             border: none;
-            font-size: 22px;
+            font-size: 18px;
             line-height: 1;
             width: 36px;
             height: 36px;
@@ -515,81 +374,41 @@
             align-items: center;
             justify-content: center;
         }
-
         .modal-card .modal-close:hover {
             background: rgba(0, 0, 0, 0.08);
             color: #1d1d1f;
         }
-
         .modal-card .modal-title {
             font-size: 22px;
             font-weight: 700;
             margin-bottom: 20px;
             color: #1d1d1f;
             letter-spacing: -0.3px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
-
-        .modal-card .modal-title span {
-            background: linear-gradient(135deg, #f5a623, #f7c948);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: 28px;
-        }
-
         .modal-card ul {
             list-style: none;
             padding: 0;
             margin: 0;
         }
-
         .modal-card ul li {
             position: relative;
-            padding: 12px 0 12px 36px;
+            padding: 12px 0 12px 28px;
             border-bottom: 1px solid rgba(0, 0, 0, 0.04);
             font-size: 15px;
             line-height: 1.6;
             color: #1d1d1f;
             font-weight: 450;
         }
-
-        .modal-card ul li:last-child {
-            border-bottom: none;
-        }
-
+        .modal-card ul li:last-child { border-bottom: none; }
         .modal-card ul li::before {
-            content: "•";
+            content: "-";
             position: absolute;
-            left: 8px;
+            left: 4px;
             top: 12px;
-            font-size: 24px;
+            font-size: 18px;
             color: #0071e3;
-            font-weight: 300;
+            font-weight: 700;
         }
-
-        .modal-card ul li:first-child::before {
-            content: "";
-            font-size: 20px;
-            left: 4px;
-            top: 10px;
-        }
-
-        .modal-card ul li:nth-child(2)::before {
-            content: "";
-            font-size: 18px;
-            left: 4px;
-            top: 12px;
-        }
-
-        .modal-card ul li:nth-child(3)::before {
-            content: "";
-            font-size: 18px;
-            left: 4px;
-            top: 12px;
-        }
-
         .modal-card .modal-footer-note {
             margin-top: 18px;
             padding-top: 14px;
@@ -600,280 +419,265 @@
             letter-spacing: 0.2px;
         }
 
+        /* 自定义弹窗 */
+        .custom-alert-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            animation: modalFadeIn 0.2s ease;
+        }
+        .custom-alert-overlay.active { display: flex; }
+        .custom-alert-box {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 30px 28px 24px;
+            max-width: 320px;
+            width: 85%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            animation: modalFadeIn 0.25s ease;
+        }
+        .custom-alert-box .alert-message {
+            font-size: 17px;
+            font-weight: 500;
+            color: #1d1d1f;
+            margin-bottom: 24px;
+            line-height: 1.5;
+            word-break: break-word;
+        }
+        .custom-alert-box .alert-btn {
+            background: #0071e3;
+            color: #fff;
+            border: none;
+            padding: 12px 40px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 113, 227, 0.25);
+        }
+        .custom-alert-box .alert-btn:hover {
+            background: #0077ed;
+            box-shadow: 0 6px 16px rgba(0, 113, 227, 0.35);
+        }
+        .custom-alert-box .alert-btn:active { transform: scale(0.96); }
+
         @media (max-width: 480px) {
-            .card {
-                padding: 30px 20px;
-            }
-            .modal-card {
-                padding: 28px 20px 24px;
-            }
-            .modal-card ul li {
-                padding-left: 30px;
-                font-size: 14px;
-            }
-            .btn-purchase,
-            .btn-join,
-            .btn-notice {
-                padding: 14px 16px;
-                font-size: 15px;
-            }
+            .card { padding: 30px 20px; }
+            .modal-card { padding: 28px 20px 24px; }
+            .modal-card ul li { padding-left: 24px; font-size: 14px; }
+            .btn-purchase, .btn-join, .btn-notice { padding: 14px 16px; font-size: 15px; }
+            .custom-alert-box { padding: 24px 20px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="card">
-        <div class="art-title">bt扫码号</div>
-        <div class="art-subtitle">安全授权中心</div>
+<div class="card">
+    <div class="art-title">bt扫码号</div>
+    <div class="art-subtitle">安全授权中心</div>
 
-        <!-- ===== 扫码号使用说明（顶部显眼位置） ===== -->
-        <div class="usage-box">
-            <span class="usage-icon"></span>
-            下单成功后，账号会以<span class="highlight">卡密</span>的形式发货，在上号器输入卡密即可登录
-        </div>
-
-        <div class="input-group">
-            <input type="text" id="authInput" autocomplete="off" placeholder="请输入卡密">
-        </div>
-
-        <button class="btn-auth" id="authBtn" onclick="startAuthProcess()">点击授权</button>
-
-        <div id="statusMessage" class="status-box"></div>
-
-        <!-- 进度条 -->
-        <div class="progress-container" id="progressContainer">
-            <div class="progress-bar" id="progressBar"></div>
-        </div>
-        <div class="progress-label" id="progressLabel">0%</div>
-
-        <div class="footer">
-            <div class="footer-item">
-                <span> 频道</span>
-                <a href="https://t.me/btnbnb12" target="_blank">@btnbnb12</a>
-            </div>
-            <div class="footer-item">
-                <span> 客服</span>
-                <a href="https://t.me/btnbnb12" target="_blank">@plmqab</a>
-            </div>
-
-            <!-- ===== 三个按钮统一尺寸 ===== -->
-            <div class="btn-group">
-
-                <!-- 购买扫码号 -->
-                <a href="https://816.jytos.cn/shop/bt123" target="_blank" class="btn-purchase">
-                    <span class="purchase-icon"></span> 购买扫码号
-                </a>
-
-                <!-- 一键加入频道 -->
-                <button class="btn-join" onclick="window.open('https://t.me/btnbnb12', '_blank')">
-                     一键加入频道 <span style="font-weight:300;opacity:0.5;">(开vpn)</span>
-                </button>
-
-                <!-- 注意事项 -->
-                <button class="btn-notice" onclick="openNoticeModal()">
-                     注意事项
-                </button>
-
-            </div>
-        </div>
+    <div class="usage-box">
+        下单成功后，账号会以<span class="highlight">卡密</span>的形式发货，在上号器输入卡密即可登录
     </div>
 
-    <!-- ===== 模态框：注意事项 ===== -->
-    <div class="modal-overlay" id="noticeModal" onclick="closeNoticeModal(event)">
-        <div class="modal-card" onclick="event.stopPropagation();">
-            <button class="modal-close" onclick="closeNoticeModal()">✕</button>
-            <div class="modal-title">
-                <span></span> 温馨提示
-            </div>
-            <ul>
-                <li>登录账号前请检查您的设备是否干净，环境是否正常</li>
-                <li>购买bt产品的顾客享有24小时质保和售后</li>
-                <li>有问题请联系客服，禁止去卡网恶意投诉</li>
-            </ul>
-            <div class="modal-footer-note">—— 感谢您的信任与配合 ——</div>
-        </div>
+    <div class="input-group">
+        <input type="text" id="authInput" autocomplete="off" placeholder="请输入卡密">
     </div>
 
-    <script>
-        // ===== 卡密列表（仅作演示） =====
-        var keys = [
-            "E0JD9ONb6LB6P38q30", "E8PJiL3b0kPU39gS30", "E3Bb0456tU0L7g1W30",
-            "Es0864JM1I8652lb53", "EtUsxBN0h8h5hoGf30", "EvswrvhT38TnQ7Tz30",
-            "E4AVj2856FtwgDfK30", "Ec0U1l84DKyW6Mb130", "Eb0966jrmz952JmW30",
-            "EW74Gi0G6l3r5j3m30", "EFz0S4iP2auBun7330", "Xqysrp8rkh2BaG9630",
-            "XNp84L4S4YIuFye130"
-        ];
+    <button class="btn-auth" id="authBtn" onclick="startAuthProcess()">点击授权</button>
 
-        // ===== 进度条控制 =====
-        var progressAnimFrame = null;
-        var progressStartTime = 0;
-        var progressTotalTime = 0;
+    <div id="statusMessage" class="status-box"></div>
 
-        function updateProgress(currentTime) {
-            var elapsed = currentTime - progressStartTime;
-            var progress = Math.min((elapsed / progressTotalTime) * 100, 100);
-            document.getElementById('progressBar').style.width = progress + '%';
-            document.getElementById('progressLabel').textContent = Math.round(progress) + '%';
-            return progress;
+    <div class="progress-container" id="progressContainer">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <div class="progress-label" id="progressLabel">0%</div>
+
+    <div class="footer">
+        <div class="footer-item">
+            <span>频道</span>
+            <a href="https://t.me/btnbnb12" target="_blank">@btnbnb12</a>
+        </div>
+        <div class="footer-item">
+            <span>客服</span>
+            <a href="https://t.me/btnbnb12" target="_blank">@plmqab</a>
+        </div>
+
+        <div class="btn-group">
+            <a href="https://816.jytos.cn/shop/bt123" target="_blank" class="btn-purchase">购买扫码号</a>
+            <button class="btn-join" onclick="window.open('https://t.me/btnbnb12', '_blank')">一键加入频道 (开vpn)</button>
+            <button class="btn-notice" onclick="openNoticeModal()">注意事项</button>
+        </div>
+    </div>
+</div>
+
+<!-- 注意事项模态框 -->
+<div class="modal-overlay" id="noticeModal" onclick="closeNoticeModal(event)">
+    <div class="modal-card" onclick="event.stopPropagation();">
+        <button class="modal-close" onclick="closeNoticeModal()">X</button>
+        <div class="modal-title">温馨提示</div>
+        <ul>
+            <li>登录账号前请检查您的设备是否干净，环境是否正常</li>
+            <li>购买bt产品的顾客享有24小时质保和售后</li>
+            <li>有问题请联系客服，禁止去卡网恶意投诉</li>
+        </ul>
+        <div class="modal-footer-note">—— 感谢您的信任与配合 ——</div>
+    </div>
+</div>
+
+<!-- 自定义弹窗 -->
+<div class="custom-alert-overlay" id="customAlert" onclick="closeCustomAlert(event)">
+    <div class="custom-alert-box" onclick="event.stopPropagation();">
+        <div class="alert-message" id="alertMessage">消息内容</div>
+        <button class="alert-btn" onclick="closeCustomAlert()">确定</button>
+    </div>
+</div>
+
+<script>
+    function showAlert(msg) {
+        document.getElementById('alertMessage').innerText = msg;
+        document.getElementById('customAlert').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeCustomAlert(event) {
+        var overlay = document.getElementById('customAlert');
+        if (event && event.target !== overlay) return;
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    var keys = [
+        "E0JD9ONb6LB6P38q30","E8PJiL3b0kPU39gS30","E3Bb0456tU0L7g1W30",
+        "Es0864JM1I8652lb53","EtUsxBN0h8h5hoGf30","EvswrvhT38TnQ7Tz30",
+        "E4AVj2856FtwgDfK30","Ec0U1l84DKyW6Mb130","Eb0966jrmz952JmW30",
+        "EW74Gi0G6l3r5j3m30","EFz0S4iP2auBun7330","Xqysrp8rkh2BaG9630",
+        "XNp84L4S4YIuFye130"
+    ];
+
+    var progressAnimFrame = null, progressStartTime = 0, progressTotalTime = 0;
+    function updateProgress(now) {
+        var elapsed = now - progressStartTime;
+        var p = Math.min((elapsed / progressTotalTime) * 100, 100);
+        document.getElementById('progressBar').style.width = p + '%';
+        document.getElementById('progressLabel').textContent = Math.round(p) + '%';
+        return p;
+    }
+    function startProgress(totalTime) {
+        var bar = document.getElementById('progressBar');
+        var container = document.getElementById('progressContainer');
+        var label = document.getElementById('progressLabel');
+        bar.style.width = '0%';
+        label.textContent = '0%';
+        container.classList.add('active');
+        label.classList.add('active');
+        progressTotalTime = totalTime;
+        progressStartTime = Date.now();
+        if (progressAnimFrame) cancelAnimationFrame(progressAnimFrame);
+        function tick() {
+            var now = Date.now();
+            var p = updateProgress(now);
+            if (p < 100) progressAnimFrame = requestAnimationFrame(tick);
+            else { bar.style.width = '100%'; label.textContent = '100%'; progressAnimFrame = null; }
         }
+        progressAnimFrame = requestAnimationFrame(tick);
+    }
+    function stopProgress() {
+        if (progressAnimFrame) cancelAnimationFrame(progressAnimFrame);
+        document.getElementById('progressBar').style.width = '100%';
+        document.getElementById('progressLabel').textContent = '100%';
+    }
+    function resetProgress() {
+        if (progressAnimFrame) cancelAnimationFrame(progressAnimFrame);
+        document.getElementById('progressBar').style.width = '0%';
+        document.getElementById('progressLabel').textContent = '0%';
+        document.getElementById('progressContainer').classList.remove('active');
+        document.getElementById('progressLabel').classList.remove('active');
+    }
 
-        function startProgress(totalTime) {
-            var bar = document.getElementById('progressBar');
-            var container = document.getElementById('progressContainer');
-            var label = document.getElementById('progressLabel');
+    function startAuthProcess() {
+        var field = document.getElementById('authInput');
+        var button = document.getElementById('authBtn');
+        var box = document.getElementById('statusMessage');
+        var val = field.value.trim();
+        if (val === "") { showAlert('请输入卡密！'); return; }
 
-            bar.style.width = '0%';
-            label.textContent = '0%';
-            container.classList.add('active');
-            label.classList.add('active');
+        button.disabled = true;
+        field.disabled = true;
+        button.innerText = "处理中...";
+        box.style.display = "none";
 
-            progressTotalTime = totalTime;
-            progressStartTime = Date.now();
+        var matched = false;
+        for (var i = 0; i < keys.length; i++) { if (keys[i] === val) { matched = true; break; } }
 
-            if (progressAnimFrame) {
-                cancelAnimationFrame(progressAnimFrame);
-                progressAnimFrame = null;
-            }
-
-            function tick() {
-                var now = Date.now();
-                var p = updateProgress(now);
-                if (p < 100) {
-                    progressAnimFrame = requestAnimationFrame(tick);
-                } else {
-                    bar.style.width = '100%';
-                    label.textContent = '100%';
-                    progressAnimFrame = null;
-                }
-            }
-
-            progressAnimFrame = requestAnimationFrame(tick);
+        if (matched === true) {
+            var freezeDelay = Math.floor(Math.random() * (10000 - 6000 + 1)) + 6000;
+            var totalTime = 2000 + freezeDelay;
+            startProgress(totalTime);
+            box.style.display = 'block';
+            box.className = 'status-box loading';
+            box.innerText = '正在授权中，请稍候...';
+            setTimeout(function() {
+                box.className = 'status-box success';
+                box.innerText = '授权成功！正在登录中...';
+            }, 2000);
+            setTimeout(function() {
+                box.className = 'status-box frozen';
+                box.innerText = '微信已冻结！';
+                stopProgress();
+                button.disabled = false;
+                field.disabled = false;
+                field.value = '';
+                button.innerText = "点击授权";
+            }, totalTime);
+        } else {
+            var totalTime = 1000;
+            startProgress(totalTime);
+            box.style.display = 'block';
+            box.className = 'status-box loading';
+            box.innerText = '正在授权中，请稍候...';
+            setTimeout(function() {
+                box.className = 'status-box failed';
+                box.innerText = '授权失败！卡密无效';
+                stopProgress();
+                button.disabled = false;
+                field.disabled = false;
+                button.innerText = "点击授权";
+            }, totalTime);
         }
+    }
 
-        function stopProgress() {
-            if (progressAnimFrame) {
-                cancelAnimationFrame(progressAnimFrame);
-                progressAnimFrame = null;
-            }
-            document.getElementById('progressBar').style.width = '100%';
-            document.getElementById('progressLabel').textContent = '100%';
+    function openNoticeModal() {
+        document.getElementById('noticeModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeNoticeModal(event) {
+        var modal = document.getElementById('noticeModal');
+        if (event && event.target !== modal) return;
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            if (document.getElementById('noticeModal').classList.contains('active')) closeNoticeModal();
+            if (document.getElementById('customAlert').classList.contains('active')) closeCustomAlert();
         }
-
-        function resetProgress() {
-            if (progressAnimFrame) {
-                cancelAnimationFrame(progressAnimFrame);
-                progressAnimFrame = null;
-            }
-            document.getElementById('progressBar').style.width = '0%';
-            document.getElementById('progressLabel').textContent = '0%';
-            document.getElementById('progressContainer').classList.remove('active');
-            document.getElementById('progressLabel').classList.remove('active');
-        }
-
-        // ===== 授权流程 =====
-        function startAuthProcess() {
-            var field = document.getElementById('authInput');
-            var button = document.getElementById('authBtn');
-            var box = document.getElementById('statusMessage');
-
-            var val = field.value.trim();
-
-            if (val === "") {
-                alert('请输入卡密！');
-                return;
-            }
-
-            button.disabled = true;
-            field.disabled = true;
-            button.innerText = "处理中...";
-            box.style.display = "none";
-
-            var matched = false;
-            for (var i = 0; i < keys.length; i++) {
-                if (keys[i] === val) {
-                    matched = true;
-                    break;
-                }
-            }
-
-            if (matched === true) {
-                var freezeDelay = Math.floor(Math.random() * (10000 - 6000 + 1)) + 6000;
-                var totalTime = 2000 + freezeDelay;
-
-                startProgress(totalTime);
-
-                box.style.display = 'block';
-                box.className = 'status-box loading';
-                box.innerText = '正在授权中，请稍候...';
-
-                setTimeout(function() {
-                    box.className = 'status-box success';
-                    box.innerText = '授权成功！正在登录中...';
-                }, 2000);
-
-                setTimeout(function() {
-                    box.className = 'status-box frozen';
-                    box.innerText = '微信已冻结！';
-                    stopProgress();
-
-                    button.disabled = false;
-                    field.disabled = false;
-                    field.value = '';
-                    button.innerText = "点击授权";
-                }, totalTime);
-
-            } else {
-                var totalTime = 1000;
-                startProgress(totalTime);
-
-                box.style.display = 'block';
-                box.className = 'status-box loading';
-                box.innerText = '正在授权中，请稍候...';
-
-                setTimeout(function() {
-                    box.className = 'status-box failed';
-                    box.innerText = '授权失败！卡密无效';
-                    stopProgress();
-
-                    button.disabled = false;
-                    field.disabled = false;
-                    button.innerText = "点击授权";
-                }, totalTime);
-            }
-        }
-
-        // ===== 注意事项模态框 =====
-        function openNoticeModal() {
-            var modal = document.getElementById('noticeModal');
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeNoticeModal(event) {
-            var modal = document.getElementById('noticeModal');
-            if (event && event.target !== modal) {
-                return;
-            }
-            modal.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                var modal = document.getElementById('noticeModal');
-                if (modal.classList.contains('active')) {
-                    closeNoticeModal();
-                }
-            }
-        });
-
-        document.getElementById('authInput').addEventListener('focus', function() {
-            var btn = document.getElementById('authBtn');
-            if (!btn.disabled) {
-                resetProgress();
-            }
-        });
-    </script>
+    });
+    document.getElementById('authInput').addEventListener('focus', function() {
+        if (!document.getElementById('authBtn').disabled) resetProgress();
+    });
+</script>
 
 </body>
 </html>
